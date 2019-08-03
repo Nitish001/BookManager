@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+< lang="en">
+<head>
+	<title>Table V05</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="static/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="static/css/main.css">
+	===============================================================================================-->
+</head>
+
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver1">
+					<div class="table100-firstcol">
+						<table>
+							<thead>
+								<tr class="row100 head">
+									<th class="cell100 column1">BOOK ID</th>
+								</tr>
+							</thead>
+							<tbody>
+								{%for i in data%}
+<!--									<tr class="row100 body">-->
+<!--									<td class="cell100 column1">{{i}}</td></tr>-->
+                                    <tr class="row100 body">
+										<td class="cell100 column2">{{i[0]}}</td>
+
+								{%endfor%}
+							</tbody>
+						</table>
+					</div>
+
+					<div class="wrap-table100-nextcols js-pscroll">
+						<div class="table100-nextcols">
+							<table>
+								<thead>
+									<tr class="row100 head">
+										<th class="cell100 column2">TITLE</th>
+										<th class="cell100 column3">ISBN</th>
+										<th class="cell100 column4">COUNT</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									</tr>
+
+                                    {%for i in data%}
+<!--
+	<tr class="row100 body">-->
+									<form method="GET" id="my_form"></form>
+                                    <tr class="row100 body">
+
+										<td class="cell100 column2">{{i[1]}}</td>
+										<td class="cell100 column3">{{i[2]}}</td>
+<!--										<td class="cell100 column4">{{i[3]}}</td>-->
+										<td class="cell100 coloumn4"><input type="text" name = "stock" id = "stock_{{i[1]}}" value ={{i[3]}} form ="my_form"> </td>
+										<td class="cell100 coloumn6"><button type="button" id = "{{i[1]}}" onclick="replyclick(this.id)">UPDATE</button></td>
+									</tr>
+
+								{%endfor%}
+
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!--===============================================================================================-->
+	<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--===============================================================================================-->
+	<script src="static/vendor/bootstrap/js/popper.js"></script>
+	<script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="static/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="static/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			var ps = new PerfectScrollbar(this);
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+
+			$(this).on('ps-x-reach-start', function(){
+				$(this).parent().find('.table100-firstcol').removeClass('shadow-table100-firstcol');
+			});
+
+			$(this).on('ps-scroll-x', function(){
+				$(this).parent().find('.table100-firstcol').addClass('shadow-table100-firstcol');
+			});
+
+		});
+
+	  function replyclick(clicked_id)
+	  {
+		alert(clicked_id);
+		  var stock_count = document.getElementById("stock_"+clicked_id).value;
+		  alert(stock_count);
+<!--		  var data = clicked_id +"_"+stock_count;-->
+		 $.ajax({
+        url: '/update',
+        type: 'POST',
+			data: { 'field1': stock_count, 'field2' : clicked_id }
+		}).done(function(data) {
+	//                console.log(data);
+                //redirect
+                window.location.href = "/";
+            });
+	  }
+
+
+	</script>
+<!--===============================================================================================-->
+	<script src="static/js/main.js">
+
+	</script>
+
+
+<a href="/insert" ><button>Insert Book</button></a>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>For loop in Flask</title>
+</head>
+<body>
+
+<ol>
+
+<!--    <br>{{data}}</br>-->
+<!-- For loop logic of jinja template -->
+{%for i in data%}
+
+	<li>{{i['volumeInfo']['title']}}</li>
+		{{ i.industryIdentifiers[0]}}
+
+	<li>{{y}}</li>
+
+{%endfor%}
+
+
+</ol>
+
+</body>
+</html>
